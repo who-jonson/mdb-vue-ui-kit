@@ -14,7 +14,8 @@
     ".": {
       "import": "./dist/mdb-vue-ui-kit.es.js",
       "require": "./dist/mdb-vue-ui-kit.umd.js"
-    }
+    },
+    "./": "./"
   },
   "types": "./dist/mdb-vue-ui-kit.d.ts",
   "scripts": {

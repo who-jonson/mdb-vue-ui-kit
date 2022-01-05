@@ -1,33 +1,35 @@
 <template>
-  <component :is="tag" :class="className"><slot></slot></component>
+  <component :is="tag" :class="className">
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBCardHeader",
+  name: 'MDBCardHeader',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     bg: String,
-    border: String,
+    border: String
   },
   setup(props) {
     const className = computed(() => {
       return [
-        "card-header",
+        'card-header',
         props.border && `border-${props.border}`,
-        props.bg && `bg-${props.bg}`,
-      ];
-    });
+        props.bg && `bg-${props.bg}`
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

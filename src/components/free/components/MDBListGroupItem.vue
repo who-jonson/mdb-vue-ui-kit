@@ -5,49 +5,50 @@
     :aria-current="active ? true : null"
     :aria-disabled="disabled ? true : null"
     :disabled="disabled ? true : null"
-    ><slot></slot
-  ></component>
+  >
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBListGroupItem",
+  name: 'MDBListGroupItem',
   props: {
     tag: {
       type: String,
-      default: "li",
+      default: 'li'
     },
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     action: {
       type: Boolean,
-      default: false,
+      default: false
     },
-    color: String,
+    color: String
   },
   setup(props) {
     const className = computed(() => {
       return [
-        "list-group-item",
-        props.active && "active",
-        props.disabled && "disabled",
-        props.action && "list-group-item-action",
-        props.color && `list-group-item-${props.color}`,
-      ];
-    });
+        'list-group-item',
+        props.active && 'active',
+        props.disabled && 'disabled',
+        props.action && 'list-group-item-action',
+        props.color && `list-group-item-${props.color}`
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

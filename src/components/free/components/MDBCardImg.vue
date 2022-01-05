@@ -5,63 +5,63 @@
     :alt="alt"
     :class="className"
     v-bind="$attrs"
-  ></component>
-  <div class="card-img-overlay" v-if="overlay" v-bind="$attrs">
-    <slot></slot>
+  />
+  <div v-if="overlay" class="card-img-overlay" v-bind="$attrs">
+    <slot />
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBCardImg",
+  name: 'MDBCardImg',
   props: {
     tag: {
       type: String,
-      default: "img",
+      default: 'img'
     },
     src: {
       type: String,
-      required: true,
+      required: true
     },
     alt: String,
     top: {
       type: Boolean,
-      default: false,
+      default: false
     },
     bottom: {
       type: Boolean,
-      default: false,
+      default: false
     },
     fluid: {
       type: Boolean,
-      default: false,
+      default: false
     },
     overlay: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        props.top && `card-img-top`,
-        props.bottom && `card-img-bottom`,
-        props.fluid && `img-fluid`,
-        props.overlay && "card-img",
-        !props.top &&
-          !props.bottom &&
-          !props.fluid &&
-          !props.overlay &&
-          `card-img`,
-      ];
-    });
+        props.top && 'card-img-top',
+        props.bottom && 'card-img-bottom',
+        props.fluid && 'img-fluid',
+        props.overlay && 'card-img',
+        !props.top
+          && !props.bottom
+          && !props.fluid
+          && !props.overlay
+          && 'card-img'
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

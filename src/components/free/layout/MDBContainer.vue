@@ -1,68 +1,68 @@
 <template>
   <component :is="tag" :class="className">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBContainer",
+  name: 'MDBContainer',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     sm: {
       type: Boolean,
-      default: false,
+      default: false
     },
     md: {
       type: Boolean,
-      default: false,
+      default: false
     },
     lg: {
       type: Boolean,
-      default: false,
+      default: false
     },
     xl: {
       type: Boolean,
-      default: false,
+      default: false
     },
     xxl: {
       type: Boolean,
-      default: false,
+      default: false
     },
     fluid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        props.fluid ? "container-fluid" : "",
-        props.sm ? "container-sm" : "",
-        props.md ? "container-md" : "",
-        props.lg ? "container-lg" : "",
-        props.xl ? "container-xl" : "",
-        props.xxl ? "container-xxl" : "",
-        !props.fluid &&
-        !props.sm &&
-        !props.md &&
-        !props.lg &&
-        !props.xl &&
-        !props.xxl
-          ? "container"
-          : "",
-      ];
-    });
+        props.fluid ? 'container-fluid' : '',
+        props.sm ? 'container-sm' : '',
+        props.md ? 'container-md' : '',
+        props.lg ? 'container-lg' : '',
+        props.xl ? 'container-xl' : '',
+        props.xxl ? 'container-xxl' : '',
+        !props.fluid
+        && !props.sm
+        && !props.md
+        && !props.lg
+        && !props.xl
+        && !props.xxl
+          ? 'container'
+          : ''
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

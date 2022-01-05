@@ -1,29 +1,29 @@
 <template>
   <component :is="tag" :class="className">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBModalFooter",
+  name: 'MDBModalFooter',
   props: {
     tag: {
       type: String,
-      default: "div",
-    },
+      default: 'div'
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["modal-footer"];
-    });
+      return ['modal-footer']
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

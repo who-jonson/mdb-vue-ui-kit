@@ -1,19 +1,19 @@
-import { ref } from "vue";
-import { on, off } from "./MDBEventHandlers";
+import { ref } from 'vue'
+import { off, on } from './MDBEventHandlers'
 
 function MDBFocusTrap() {
-  const trapElement = ref(null);
-  const firstFocusableElement = ref(null);
-  const lastFocusableElement = ref(null);
+  const trapElement = ref(null)
+  const firstFocusableElement = ref(null)
+  const lastFocusableElement = ref(null)
 
   function initFocusTrap(element) {
-    trapElement.value = element;
+    trapElement.value = element
 
-    calculateFocusTrap();
+    calculateFocusTrap()
 
-    on(window, "keydown", focusFirstElement);
+    on(window, 'keydown', focusFirstElement)
 
-    return true;
+    return true
   }
 
   function calculateFocusTrap() {
@@ -23,52 +23,52 @@ function MDBFocusTrap() {
       )
     ).filter((el) => {
       return (
-        !el.classList.contains("ps__thumb-x") &&
-        !el.classList.contains("ps__thumb-y") &&
-        !el.disabled
-      );
-    });
+        !el.classList.contains('ps__thumb-x')
+        && !el.classList.contains('ps__thumb-y')
+        && !el.disabled
+      )
+    })
 
-    if (focusable.length === 0) return;
+    if (focusable.length === 0) return
 
-    firstFocusableElement.value = focusable[0];
+    firstFocusableElement.value = focusable[0]
 
-    lastFocusableElement.value = focusable[focusable.length - 1];
-    on(lastFocusableElement.value, "keydown", (e) =>
+    lastFocusableElement.value = focusable[focusable.length - 1]
+    on(lastFocusableElement.value, 'keydown', e =>
       handleLastElementKeydown(e, true)
-    );
+    )
   }
 
   function handleLastElementKeydown(e) {
-    if (e.key === "Tab") {
-      e.preventDefault();
-      focusTrap();
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      focusTrap()
     }
   }
 
   function focusTrap() {
-    if (!firstFocusableElement.value) return;
+    if (!firstFocusableElement.value) return
 
-    firstFocusableElement.value.focus();
+    firstFocusableElement.value.focus()
   }
 
   function focusFirstElement(e, trap = false) {
-    if (e.key === "Tab") {
-      e.preventDefault();
-      focusTrap();
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      focusTrap()
     }
-    if (trap) return;
-    off(window, "keydown", focusFirstElement);
+    if (trap) return
+    off(window, 'keydown', focusFirstElement)
   }
 
   function removeFocusTrap() {
-    off(lastFocusableElement.value, "keydown", handleLastElementKeydown);
+    off(lastFocusableElement.value, 'keydown', handleLastElementKeydown)
   }
 
   return {
     initFocusTrap,
-    removeFocusTrap,
-  };
+    removeFocusTrap
+  }
 }
 
-export default MDBFocusTrap;
+export default MDBFocusTrap

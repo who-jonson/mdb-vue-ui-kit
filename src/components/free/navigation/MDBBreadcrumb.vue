@@ -1,28 +1,30 @@
 <template>
-  <component :is="tag" :class="className"><slot></slot></component>
+  <component :is="tag" :class="className">
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBBreadcrumb",
+  name: 'MDBBreadcrumb',
   props: {
     tag: {
       type: String,
-      default: "ol",
-    },
+      default: 'ol'
+    }
   },
 
   setup(props) {
     const className = computed(() => {
-      return ["breadcrumb"];
-    });
+      return ['breadcrumb']
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

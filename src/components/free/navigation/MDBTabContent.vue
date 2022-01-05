@@ -5,45 +5,45 @@
         <slot />
       </component>
     </div>
-    <component v-else :is="tag" :class="className" v-bind="$attrs">
+    <component :is="tag" v-else :class="className" v-bind="$attrs">
       <slot />
     </component>
   </keep-alive>
 </template>
 
 <script>
-import { computed, inject } from "vue";
+import { computed, inject } from 'vue'
 export default {
-  name: "MDBTabContent",
+  name: 'MDBTabContent',
   inheritAttrs: false,
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     col: {
       type: String,
-      default: "9",
+      default: '9'
     },
-    contentClasses: String,
+    contentClasses: String
   },
   setup(props) {
     const className = computed(() => {
-      return ["tab-content", props.contentClasses && props.contentClasses];
-    });
+      return ['tab-content', props.contentClasses && props.contentClasses]
+    })
 
     const columnClassName = computed(() => {
-      return [`col-${props.col}`];
-    });
+      return [`col-${props.col}`]
+    })
 
-    const isVertical = inject("isVertical", false);
+    const isVertical = inject('isVertical', false)
 
     return {
       isVertical,
       className,
       columnClassName,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

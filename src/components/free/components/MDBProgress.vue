@@ -1,34 +1,34 @@
 <template>
   <component :is="tag" :class="className" :style="style">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBProgress",
+  name: 'MDBProgress',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
-    height: Number,
+    height: Number
   },
   setup(props) {
     const className = computed(() => {
-      return ["progress"];
-    });
+      return ['progress']
+    })
     const style = computed(() => {
-      return { height: props.height + "px" };
-    });
+      return { height: `${props.height}px` }
+    })
 
     return {
       className,
       style,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

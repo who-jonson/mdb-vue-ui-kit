@@ -1,44 +1,46 @@
 <template>
-  <component :is="tag" :class="className"><slot></slot></component>
+  <component :is="tag" :class="className">
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBPagination",
+  name: 'MDBPagination',
   props: {
     tag: {
       type: String,
-      default: "ul",
+      default: 'ul'
     },
     circle: {
       type: Boolean,
-      default: false,
+      default: false
     },
     lg: {
       type: Boolean,
-      default: false,
+      default: false
     },
     sm: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        "pagination",
-        props.sm && "pagination-sm",
-        props.lg && "pagination-lg",
-        props.circle && "pagination-circle",
-      ];
-    });
+        'pagination',
+        props.sm && 'pagination-sm',
+        props.lg && 'pagination-lg',
+        props.circle && 'pagination-circle'
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

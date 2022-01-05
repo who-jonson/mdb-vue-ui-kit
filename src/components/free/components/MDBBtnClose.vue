@@ -1,26 +1,26 @@
 <template>
-  <button :class="className" aria-label="Close"></button>
+  <button :class="className" aria-label="Close" />
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBBtnClose",
+  name: 'MDBBtnClose',
   props: {
     white: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["btn-close", props.white && `btn-close-white`];
-    });
+      return ['btn-close', props.white && 'btn-close-white']
+    })
 
     return {
-      className,
-    };
-  },
-};
+      className
+    }
+  }
+}
 </script>

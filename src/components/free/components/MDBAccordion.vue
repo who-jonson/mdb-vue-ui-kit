@@ -1,47 +1,47 @@
 <template>
-  <component :is="tag" :class="className" ref="accordionRef">
+  <component :is="tag" ref="accordionRef" :class="className">
     <slot />
   </component>
 </template>
 
 <script>
-import { computed, provide, ref, watchEffect } from "vue";
+import { computed, provide, ref, watchEffect } from 'vue'
 
 export default {
-  name: "MDBAccordion",
+  name: 'MDBAccordion',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     modelValue: String,
     stayOpen: Boolean,
     flush: Boolean,
-    classes: String,
+    classes: String
   },
   setup(props, { emit }) {
-    const accordionRef = ref(null);
+    const accordionRef = ref(null)
     const className = computed(() => {
-      return ["accordion", props.flush && "accordion-flush", props.classes];
-    });
+      return ['accordion', props.flush && 'accordion-flush', props.classes]
+    })
 
-    const activeItem = ref(props.modelValue);
+    const activeItem = ref(props.modelValue)
     const setActiveItem = (item) => {
-      activeItem.value = item;
-      emit("update:modelValue", item);
-    };
+      activeItem.value = item
+      emit('update:modelValue', item)
+    }
 
-    watchEffect(() => (activeItem.value = props.modelValue));
+    watchEffect(() => (activeItem.value = props.modelValue))
 
-    provide("activeItem", activeItem);
-    provide("stayOpen", props.stayOpen);
-    provide("setActiveItem", setActiveItem);
+    provide('activeItem', activeItem)
+    provide('stayOpen', props.stayOpen)
+    provide('setActiveItem', setActiveItem)
 
     return {
       accordionRef,
       setActiveItem,
-      className,
-    };
-  },
-};
+      className
+    }
+  }
+}
 </script>

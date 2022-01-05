@@ -1,52 +1,50 @@
-import { ref, nextTick, reactive } from "vue";
-import { createPopper } from "@popperjs/core";
+import { nextTick, reactive, ref } from 'vue'
+import { createPopper } from '@popperjs/core'
 
 function MDBPopper() {
-  const isPopperActive = ref(false);
-  const triggerEl = ref(null);
-  const popperEl = ref(null);
-  const popper = ref(undefined);
-  const popperOptions = reactive({});
+  const isPopperActive = ref(false)
+  const triggerEl = ref(null)
+  const popperEl = ref(null)
+  const popper = ref(undefined)
+  const popperOptions = reactive({})
 
   function setPopper(trigger, popper, config) {
-    triggerEl.value = trigger;
-    popperEl.value = popper;
+    triggerEl.value = trigger
+    popperEl.value = popper
     popperOptions.value = {
-      placement: "bottom",
+      placement: 'bottom',
       modifiers: [
         {
-          name: "offset",
+          name: 'offset',
           options: {
-            offset: [0, 0],
-          },
-        },
+            offset: [0, 0]
+          }
+        }
       ],
-      ...config,
-    };
+      ...config
+    }
   }
 
   function togglePopper() {
-    isPopperActive.value = !isPopperActive.value;
+    isPopperActive.value = !isPopperActive.value
 
-    if (isPopperActive.value) {
-      nextTick(() => setupPopper());
-    }
+    if (isPopperActive.value)
+      nextTick(() => setupPopper())
   }
 
   function openPopper() {
-    if (isPopperActive.value) {
-      return;
-    }
-    isPopperActive.value = true;
-    nextTick(() => (popper.value = setupPopper()));
+    if (isPopperActive.value)
+      return
+
+    isPopperActive.value = true
+    nextTick(() => (popper.value = setupPopper()))
   }
 
   function closePopper() {
-    if (!isPopperActive.value) {
-      return;
-    }
+    if (!isPopperActive.value)
+      return
 
-    isPopperActive.value = !isPopperActive.value;
+    isPopperActive.value = !isPopperActive.value
   }
 
   function setupPopper() {
@@ -55,41 +53,39 @@ function MDBPopper() {
         triggerEl.value,
         popperEl.value,
         popperOptions.value
-      );
-    } else {
-      popper.value.update();
+      )
+    }
+    else {
+      popper.value.update()
     }
   }
 
   function updatePopper(option, value) {
-    popperOptions.value[option] = value;
+    popperOptions.value[option] = value
 
     popper.value = createPopper(
       triggerEl.value,
       popperEl.value,
       popperOptions.value
-    );
+    )
   }
 
   function destroyPopper() {
-    if (!popper.value) {
-      return;
-    }
+    if (!popper.value)
+      return
 
-    popper.value.destroy();
-    popper.value = undefined;
+    popper.value.destroy()
+    popper.value = undefined
   }
 
   function getPopperOffset(offset, element) {
-    if (typeof offset === "string") {
-      return offset.split(",").map((val) => Number.parseInt(val, 10));
-    }
+    if (typeof offset === 'string')
+      return offset.split(',').map(val => Number.parseInt(val, 10))
 
-    if (typeof offset === "function") {
-      return (popperData) => offset(popperData, element);
-    }
+    if (typeof offset === 'function')
+      return popperData => offset(popperData, element)
 
-    return offset;
+    return offset
   }
 
   return {
@@ -100,8 +96,8 @@ function MDBPopper() {
     closePopper,
     updatePopper,
     destroyPopper,
-    getPopperOffset,
-  };
+    getPopperOffset
+  }
 }
 
-export default MDBPopper;
+export default MDBPopper

@@ -1,68 +1,68 @@
 <template>
   <component :is="tag" :class="className">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
-<script>
-import { computed } from "vue";
-import MDBCollapse from "../components/MDBCollapse";
+<script lang="ts">
+import { computed } from 'vue'
+import MDBCollapse from '../components/MDBCollapse.vue'
 
 export default {
-  name: "MDBNavbarNav",
+  name: 'MDBNavbarNav',
   components: { MDBCollapse },
   props: {
     tag: {
       type: String,
-      default: "ul",
+      default: 'ul'
     },
     right: {
       type: Boolean,
-      default: false,
+      default: false
     },
     center: {
       type: Boolean,
-      default: false,
+      default: false
     },
     vertical: {
       type: Boolean,
-      default: false,
+      default: false
     },
     justifyAround: {
       type: Boolean,
-      default: false,
+      default: false
     },
     class: {
-      type: String,
+      type: String
     },
     nav: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        props.nav ? "nav" : "navbar-nav",
+        props.nav ? 'nav' : 'navbar-nav',
         props.right
-          ? "ms-auto"
+          ? 'ms-auto'
           : props.center
-          ? "justify-content-center w-100"
-          : props.vertical
-          ? "flex-column"
-          : props.justifyAround
-          ? "justify-content-around w-100"
-          : "me-auto",
-        props.class && `${props.class}`,
-      ];
-    });
+            ? 'justify-content-center w-100'
+            : props.vertical
+              ? 'flex-column'
+              : props.justifyAround
+                ? 'justify-content-around w-100'
+                : 'me-auto',
+        props.class && `${props.class}`
+      ]
+    })
 
     return {
       props,
-      className,
-    };
-  },
-};
+      className
+    }
+  }
+}
 </script>
 
 <style lang="scss"></style>

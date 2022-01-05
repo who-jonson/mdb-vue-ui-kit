@@ -1,17 +1,17 @@
-import { on, off } from "@/components/utils/MDBEventHandlers";
+import { off, on } from '../../components/utils/MDBEventHandlers'
 
 export default {
   mounted(el) {
-    if (!el) return;
+    if (!el) return
 
-    let firstFocusableElement;
-    let lastFocusableElement;
+    let firstFocusableElement
+    let lastFocusableElement
 
     el.initFocusTrap = () => {
-      el.calculateFocusTrap();
+      el.calculateFocusTrap()
 
-      on(window, "keydown", el.focusFirstElement);
-    };
+      on(window, 'keydown', el.focusFirstElement)
+    }
 
     el.calculateFocusTrap = () => {
       const focusable = Array.from(
@@ -20,44 +20,44 @@ export default {
         )
       ).filter((item) => {
         return (
-          !item.classList.contains("ps__thumb-x") &&
-          !item.classList.contains("ps__thumb-y") &&
-          !item.disabled
-        );
-      });
+          !item.classList.contains('ps__thumb-x')
+          && !item.classList.contains('ps__thumb-y')
+          && !item.disabled
+        )
+      })
 
-      if (focusable.length === 0) return;
+      if (focusable.length === 0) return
 
-      firstFocusableElement = focusable[0];
+      firstFocusableElement = focusable[0]
 
-      lastFocusableElement = focusable[focusable.length - 1];
-      on(lastFocusableElement, "keydown", (e) => el.focusFirstElement(e, true));
-    };
+      lastFocusableElement = focusable[focusable.length - 1]
+      on(lastFocusableElement, 'keydown', e => el.focusFirstElement(e, true))
+    }
 
     el.focusTrap = () => {
-      if (!firstFocusableElement) return;
+      if (!firstFocusableElement) return
 
-      firstFocusableElement.focus();
-    };
+      firstFocusableElement.focus()
+    }
 
     el.focusFirstElement = (e, trap = false) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        el.focusTrap();
+      if (e.key === 'Tab') {
+        e.preventDefault()
+        el.focusTrap()
       }
-      if (trap) return;
-      off(window, "keydown", el.focusFirstElement);
-    };
+      if (trap) return
+      off(window, 'keydown', el.focusFirstElement)
+    }
 
     el.removeFocusTrap = () => {
-      off(lastFocusableElement, "keydown", el.handleLastElementKeydown);
-    };
+      off(lastFocusableElement, 'keydown', el.handleLastElementKeydown)
+    }
 
-    el.initFocusTrap();
+    el.initFocusTrap()
   },
   unmounted(el) {
-    if (!el) return;
+    if (!el) return
 
-    el.removeFocusTrap();
-  },
-};
+    el.removeFocusTrap()
+  }
+}

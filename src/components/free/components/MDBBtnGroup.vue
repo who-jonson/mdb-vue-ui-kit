@@ -1,38 +1,38 @@
 <template>
   <component :is="tag" :class="className" :role="role">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBBtnGroup",
+  name: 'MDBBtnGroup',
   props: {
     size: String,
     vertical: Boolean,
     role: {
       type: String,
-      default: "group",
+      default: 'group'
     },
     tag: {
       type: String,
-      default: "div",
-    },
+      default: 'div'
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
         props.size && `btn-group-${props.size}`,
-        props.vertical ? "btn-group-vertical" : "btn-group",
-      ];
-    });
+        props.vertical ? 'btn-group-vertical' : 'btn-group'
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

@@ -8,66 +8,66 @@
       :tabindex="disabledTabindex"
     >
       <span v-if="icon" aria-hidden="true">
-        <slot></slot>
+        <slot />
       </span>
       <span v-if="icon" class="sr-only">{{ labelValue }}</span>
-      <slot v-else></slot>
+      <slot v-else />
     </a>
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBPageItem",
+  name: 'MDBPageItem',
   props: {
     tag: {
       type: String,
-      default: "li",
+      default: 'li'
     },
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     href: {
-      type: String,
+      type: String
     },
     icon: {
       type: Boolean,
-      defaul: false,
+      defaul: false
     },
     label: {
-      type: String,
-    },
+      type: String
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        "page-item",
-        props.active && "active",
-        props.disabled && "disabled",
-      ];
-    });
+        'page-item',
+        props.active && 'active',
+        props.disabled && 'disabled'
+      ]
+    })
 
     const labelValue = computed(() => {
-      return props.icon && props.label ? props.label : props.href;
-    });
+      return props.icon && props.label ? props.label : props.href
+    })
 
     const disabledTabindex = computed(() => {
-      return props.disabled ? "-1" : " false";
-    });
+      return props.disabled ? '-1' : ' false'
+    })
 
     return {
       className,
       labelValue,
       disabledTabindex,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

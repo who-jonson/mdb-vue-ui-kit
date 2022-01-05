@@ -1,19 +1,19 @@
 <template>
   <transition
+    :duration="150"
     @enter="enter"
     @after-enter="afterEnter"
     @before-leave="beforeLeave"
     @after-leave="afterLeave"
-    :duration="150"
   >
     <component
-      v-show="isActive"
       :is="tag"
-      :class="className"
+      v-show="isActive"
+      :id="uid"
       ref="item"
+      :class="className"
       role="tabpanel"
       :aria-labelledby="labelledby"
-      :id="uid"
     >
       <slot />
     </component>
@@ -21,69 +21,68 @@
 </template>
 
 <script>
-import { computed, ref, inject, watchEffect, onMounted } from "vue";
+import { computed, inject, onMounted, ref, watchEffect } from 'vue'
 
 export default {
-  name: "MDBTabPane",
+  name: 'MDBTabPane',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     tabId: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["tab-pane fade", isActive.value && "show active"];
-    });
+      return ['tab-pane fade', isActive.value && 'show active']
+    })
 
-    const item = ref("item");
+    const item = ref('item')
     const uid = computed(() => {
-      return `${props.tabId}`;
-    });
+      return `${props.tabId}`
+    })
     const labelledby = computed(() => {
-      return `tab-${props.tabId}`;
-    });
+      return `tab-${props.tabId}`
+    })
 
-    const activeTabId = inject("activeTab", false);
+    const activeTabId = inject('activeTab', false)
     const isActive = ref(
-      activeTabId &&
-        (activeTabId.value === props.tabId || activeTabId === props.tabId)
-    );
+      activeTabId
+        && (activeTabId.value === props.tabId || activeTabId === props.tabId)
+    )
 
     watchEffect(
       () =>
-        (isActive.value =
-          activeTabId &&
-          (activeTabId.value === props.tabId || activeTabId === props.tabId))
-    );
+        (isActive.value
+          = activeTabId
+          && (activeTabId.value === props.tabId || activeTabId === props.tabId))
+    )
 
-    const emitShown = inject("emitShown", false);
-    const emitHidden = inject("emitHidden", false);
+    const emitShown = inject('emitShown', false)
+    const emitHidden = inject('emitHidden', false)
 
     onMounted(() => {
-      if (isActive.value && emitShown) {
-        emitShown(props.tabId);
-      }
-    });
+      if (isActive.value && emitShown)
+        emitShown(props.tabId)
+    })
 
     const afterEnter = (el) => {
-      el.style.opacity = "1";
-    };
+      el.style.opacity = '1'
+    }
     const enter = (el) => {
-      el.style.opacity = "0";
-      emitShown(props.tabId);
-    };
+      el.style.opacity = '0'
+      emitShown(props.tabId)
+    }
     const beforeLeave = (el) => {
-      el.style.opacity = "1";
-      emitHidden(props.tabId);
-    };
+      el.style.opacity = '1'
+      emitHidden(props.tabId)
+    }
     const afterLeave = (el) => {
-      el.style.opacity = "0";
-    };
+      el.style.opacity = '0'
+    }
 
     return {
       isActive,
@@ -95,8 +94,8 @@ export default {
       beforeLeave,
       afterLeave,
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

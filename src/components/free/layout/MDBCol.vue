@@ -1,76 +1,78 @@
 <template>
-  <component :is="tag" :class="className"><slot></slot></component>
+  <component :is="tag" :class="className">
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBCol",
+  name: 'MDBCol',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     col: {
-      type: String,
+      type: String
     },
     sm: {
-      type: String,
+      type: String
     },
     md: {
-      type: String,
+      type: String
     },
     lg: {
-      type: String,
+      type: String
     },
     xl: {
-      type: String,
+      type: String
     },
     offset: {
-      type: String,
+      type: String
     },
     offsetSm: {
-      type: String,
+      type: String
     },
     offsetMd: {
-      type: String,
+      type: String
     },
     offsetLg: {
-      type: String,
+      type: String
     },
     offsetXl: {
-      type: String,
+      type: String
     },
     auto: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
       return [
-        props.col ? "col-" + props.col : "",
-        props.sm ? "col-sm-" + props.sm : "",
-        props.md ? "col-md-" + props.md : "",
-        props.lg ? "col-lg-" + props.lg : "",
-        props.xl ? "col-xl-" + props.xl : "",
+        props.col ? `col-${props.col}` : '',
+        props.sm ? `col-sm-${props.sm}` : '',
+        props.md ? `col-md-${props.md}` : '',
+        props.lg ? `col-lg-${props.lg}` : '',
+        props.xl ? `col-xl-${props.xl}` : '',
         !props.col && !props.sm && !props.md && !props.lg && !props.xl
-          ? "col"
-          : "",
-        props.offset ? "offset-" + props.offset : "",
-        props.offsetSm ? "offset-sm-" + props.offsetSm : "",
-        props.offsetMd ? "offset-md-" + props.offsetMd : "",
-        props.offsetLg ? "offset-lg-" + props.offsetLg : "",
-        props.offsetXl ? "offset-xl-" + props.offsetXl : "",
-        props.auto ? "col-auto" : "",
-      ];
-    });
+          ? 'col'
+          : '',
+        props.offset ? `offset-${props.offset}` : '',
+        props.offsetSm ? `offset-sm-${props.offsetSm}` : '',
+        props.offsetMd ? `offset-md-${props.offsetMd}` : '',
+        props.offsetLg ? `offset-lg-${props.offsetLg}` : '',
+        props.offsetXl ? `offset-xl-${props.offsetXl}` : '',
+        props.auto ? 'col-auto' : ''
+      ]
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

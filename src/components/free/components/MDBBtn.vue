@@ -1,22 +1,23 @@
 <template>
   <component
     :is="tag"
+    v-mdb-ripple="ripple"
     :type="type"
     :role="role"
     :class="className"
     @click="handleClick"
-    v-mdb-ripple="ripple"
   >
-    <slot></slot
-  ></component>
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import mdbRipple from "@/directives/free/mdbRipple";
+import { computed, ref } from 'vue'
+import mdbRipple from '../../../directives/free/mdbRipple'
 
 export default {
-  name: "MDBBtn",
+  name: 'MDBBtn',
+  directives: { mdbRipple },
   props: {
     color: String,
     size: String,
@@ -27,59 +28,58 @@ export default {
     toggle: Boolean,
     role: {
       type: String,
-      default: "button",
+      default: 'button'
     },
     type: {
       type: String,
-      default: "button",
+      default: 'button'
     },
     tag: {
       type: String,
-      default: "button",
+      default: 'button'
     },
     block: {
       type: Boolean,
-      default: false,
+      default: false
     },
     ripple: {
       type: [Object, Boolean],
-      default: (props) =>
-        props.outline || props.color === "light" || props.color === "link"
-          ? { color: "dark" }
-          : true,
+      default: props =>
+        props.outline || props.color === 'light' || props.color === 'link'
+          ? { color: 'dark' }
+          : true
     },
-    picker: Boolean,
+    picker: Boolean
   },
-  directives: { mdbRipple },
-  emits: ["update:toggle"],
+  emits: ['update:toggle'],
   setup(props, { emit }) {
-    const toggle = ref(props.toggle);
+    const toggle = ref(props.toggle)
 
     const className = computed(() => {
       return [
-        !props.picker && "btn",
+        !props.picker && 'btn',
         props.color && `btn-${props.color}`,
         props.size && `btn-${props.size}`,
         props.outline && `btn-outline-${props.outline}`,
-        props.rounded && "btn-rounded",
-        props.floating && "btn-floating",
-        props.block && "btn-block",
-        toggle.value && "active",
-      ];
-    });
+        props.rounded && 'btn-rounded',
+        props.floating && 'btn-floating',
+        props.block && 'btn-block',
+        toggle.value && 'active'
+      ]
+    })
 
     function handleClick() {
       if (props.toggler) {
-        toggle.value = !toggle.value;
-        emit("update:toggle", toggle.value);
+        toggle.value = !toggle.value
+        emit('update:toggle', toggle.value)
       }
     }
 
     return {
       className,
       props,
-      handleClick,
-    };
-  },
-};
+      handleClick
+    }
+  }
+}
 </script>

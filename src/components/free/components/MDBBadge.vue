@@ -1,14 +1,14 @@
 <template>
   <component :is="tag" :class="className">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBBadge",
+  name: 'MDBBadge',
   props: {
     color: String,
     pill: Boolean,
@@ -16,25 +16,25 @@ export default {
     notification: Boolean,
     tag: {
       type: String,
-      default: "span",
-    },
+      default: 'span'
+    }
   },
   setup(props, { attrs }) {
     const className = computed(() => {
       return [
-        "badge",
+        'badge',
         props.color && `bg-${props.color}`,
-        props.pill && "rounded-pill",
-        props.dot && "badge-dot",
-        props.notification && "badge-notification",
-      ];
-    });
+        props.pill && 'rounded-pill',
+        props.dot && 'badge-dot',
+        props.notification && 'badge-notification'
+      ]
+    })
 
     return {
       className,
       attrs,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

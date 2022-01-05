@@ -1,14 +1,14 @@
 <template>
   <input
     v-if="!wrap"
-    :class="inputClassName"
     :id="uid"
-    :value="inputValue"
     v-bind="$attrs"
-    @input="handleInput"
     ref="inputRef"
     v-mdb-click-outside="clickOutside"
-  />
+    :class="inputClassName"
+    :value="inputValue"
+    @input="handleInput"
+  >
   <label
     v-if="label && !wrap"
     ref="labelRef"
@@ -17,9 +17,13 @@
   >
     {{ label }}
   </label>
-  <div class="form-helper" v-if="!wrap && helper">{{ helper }}</div>
-  <div class="form-helper" v-if="!wrap && counter">
-    <div class="form-counter">{{ currentLength }} / {{ maxlength }}</div>
+  <div v-if="!wrap && helper" class="form-helper">
+    {{ helper }}
+  </div>
+  <div v-if="!wrap && counter" class="form-helper">
+    <div class="form-counter">
+      {{ currentLength }} / {{ maxlength }}
+    </div>
   </div>
   <slot v-if="!wrap" />
   <div v-if="!wrap && validFeedback" :class="validFeedbackClassName">
@@ -32,37 +36,41 @@
     <div
       class="form-notch-leading"
       :style="{ width: `${notchLeadingWidth}px` }"
-    ></div>
+    />
     <div
       class="form-notch-middle"
       :style="{ width: `${notchMiddleWidth}px` }"
-    ></div>
-    <div class="form-notch-trailing"></div>
+    />
+    <div class="form-notch-trailing" />
   </div>
   <component
-    v-if="wrap"
     :is="tag"
+    v-if="wrap"
+    v-mdb-click-outside="clickOutside"
     :class="wrapperClassName"
     :style="validationStyle"
-    v-mdb-click-outside="clickOutside"
   >
     <slot name="prepend" />
     <input
-      :class="inputClassName"
       v-bind="$attrs"
       :id="uid"
+      ref="inputRef"
+      :class="inputClassName"
       :value="inputValue"
       @input="handleInput"
-      ref="inputRef"
-    />
+    >
     <label v-if="label" ref="labelRef" :class="labelClassName" :for="uid">
       {{ label }}
     </label>
-    <div class="form-helper" v-if="helper">{{ helper }}</div>
-    <div class="form-helper" v-if="counter">
-      <div class="form-counter">{{ currentLength }} / {{ maxlength }}</div>
+    <div v-if="helper" class="form-helper">
+      {{ helper }}
     </div>
-    <slot></slot>
+    <div v-if="counter" class="form-helper">
+      <div class="form-counter">
+        {{ currentLength }} / {{ maxlength }}
+      </div>
+    </div>
+    <slot />
     <div v-if="validFeedback" :class="validFeedbackClassName">
       {{ validFeedback }}
     </div>
@@ -73,33 +81,36 @@
       <div
         class="form-notch-leading"
         :style="{ width: `${notchLeadingWidth}px` }"
-      ></div>
+      />
       <div
         class="form-notch-middle"
         :style="{ width: `${notchMiddleWidth}px` }"
-      ></div>
-      <div class="form-notch-trailing"></div>
+      />
+      <div class="form-notch-trailing" />
     </div>
   </component>
-  <div v-if="formText" class="form-text">{{ formText }}</div>
+  <div v-if="formText" class="form-text">
+    {{ formText }}
+  </div>
 </template>
 
 <script>
 import {
   computed,
-  ref,
   onMounted,
-  onUpdated,
-  watchEffect,
   onUnmounted,
+  onUpdated,
+  ref,
   watch,
-} from "vue";
-import { on, off } from "../../utils/MDBEventHandlers";
-import { getUID } from "../../utils/getUID";
-import mdbClickOutside from "@/directives/free/mdbClickOutside.js";
+  watchEffect
+} from 'vue'
+import { off, on } from '../../utils/MDBEventHandlers'
+import { getUID } from '../../utils/getUID'
+import mdbClickOutside from '../../../directives/free/mdbClickOutside'
 
 export default {
-  name: "MDBInput",
+  name: 'MDBInput',
+  directives: { mdbClickOutside },
   inheritAttrs: false,
   props: {
     id: String,
@@ -109,16 +120,16 @@ export default {
     size: String,
     formOutline: {
       type: Boolean,
-      default: true,
+      default: true
     },
     wrapperClass: String,
     inputGroup: {
       type: [Boolean, String],
-      default: false,
+      default: false
     },
     wrap: {
       type: Boolean,
-      default: true,
+      default: true
     },
     formText: String,
     white: Boolean,
@@ -129,167 +140,163 @@ export default {
     invalidFeedback: String,
     tooltipFeedback: {
       type: Boolean,
-      default: false,
+      default: false
     },
     tag: {
       type: String,
-      default: "div",
+      default: 'div'
     },
     helper: String,
     counter: Boolean,
     maxlength: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
-  directives: { mdbClickOutside },
-  emits: ["update:modelValue", "click-outside"],
+  emits: ['update:modelValue', 'click-outside'],
   setup(props, { attrs, emit }) {
-    const inputRef = ref("inputRef");
-    const inputValue = ref(props.modelValue);
-    const labelRef = ref(null);
-    const showPlaceholder = ref(false);
-    const notchLeadingWidth = ref(9);
-    const notchMiddleWidth = ref(0);
-    const uid = props.id || getUID("MDBInput-");
+    const inputRef = ref('inputRef')
+    const inputValue = ref(props.modelValue)
+    const labelRef = ref(null)
+    const showPlaceholder = ref(false)
+    const notchLeadingWidth = ref(9)
+    const notchMiddleWidth = ref(0)
+    const uid = props.id || getUID('MDBInput-')
 
     const wrapperClassName = computed(() => {
       return [
-        props.formOutline && "form-outline",
+        props.formOutline && 'form-outline',
         inputGroupClassName.value,
-        props.white && "form-white",
-        props.wrapperClass,
-      ];
-    });
+        props.white && 'form-white',
+        props.wrapperClass
+      ]
+    })
     const inputClassName = computed(() => {
       return [
-        "form-control",
+        'form-control',
         props.size && `form-control-${props.size}`,
-        inputValue.value && "active",
-        showPlaceholder.value && "placeholder-active",
-        isInputValidated.value && isInputValid.value && "is-valid",
-        isInputValidated.value && !isInputValid.value && "is-invalid",
-      ];
-    });
+        inputValue.value && 'active',
+        showPlaceholder.value && 'placeholder-active',
+        isInputValidated.value && isInputValid.value && 'is-valid',
+        isInputValidated.value && !isInputValid.value && 'is-invalid'
+      ]
+    })
     const labelClassName = computed(() => {
-      return ["form-label", props.labelClass];
-    });
+      return ['form-label', props.labelClass]
+    })
 
     const inputGroupClassName = computed(() => {
-      if (!props.inputGroup) {
-        return;
-      }
+      if (!props.inputGroup)
+        return
+
       return props.inputGroup !== true
         ? `input-group input-group-${props.inputGroup}`
-        : "input-group";
-    });
+        : 'input-group'
+    })
 
     const validationStyle = computed(() => {
       return props.inputGroup && isInputValidated.value
-        ? { marginBottom: "1rem" }
-        : "";
-    });
+        ? { marginBottom: '1rem' }
+        : ''
+    })
 
     const validFeedbackClassName = computed(() => {
-      return props.tooltipFeedback ? "valid-tooltip" : "valid-feedback";
-    });
+      return props.tooltipFeedback ? 'valid-tooltip' : 'valid-feedback'
+    })
 
     const invalidFeedbackClassName = computed(() => {
-      return props.tooltipFeedback ? "invalid-tooltip" : "invalid-feedback";
-    });
+      return props.tooltipFeedback ? 'invalid-tooltip' : 'invalid-feedback'
+    })
 
     // Validation ------------------------
-    const isInputValidated = ref(props.isValidated);
-    const isInputValid = ref(props.isValid);
-    const defaultValidatorInvalidFeedback = ref("");
+    const isInputValidated = ref(props.isValidated)
+    const isInputValid = ref(props.isValid)
+    const defaultValidatorInvalidFeedback = ref('')
     const customInvalidFeedback = computed(() => {
       if (
-        isInputValidated.value &&
-        !isInputValid.value &&
-        props.validationEvent
-      ) {
-        return defaultValidatorInvalidFeedback.value;
-      }
-      return props.invalidFeedback;
-    });
+        isInputValidated.value
+        && !isInputValid.value
+        && props.validationEvent
+      )
+        return defaultValidatorInvalidFeedback.value
+
+      return props.invalidFeedback
+    })
 
     const handleValidation = (e) => {
-      isInputValid.value = e.target.checkValidity();
-      if (!isInputValid.value) {
-        defaultValidatorInvalidFeedback.value = e.target.validationMessage;
-      }
-      isInputValidated.value = true;
-    };
+      isInputValid.value = e.target.checkValidity()
+      if (!isInputValid.value)
+        defaultValidatorInvalidFeedback.value = e.target.validationMessage
+
+      isInputValidated.value = true
+    }
 
     const bindValidationEvents = () => {
-      if (props.validationEvent === "submit") return;
-      on(inputRef.value, props.validationEvent, handleValidation);
-    };
+      if (props.validationEvent === 'submit') return
+      on(inputRef.value, props.validationEvent, handleValidation)
+    }
 
     function calcNotch() {
-      if (labelRef.value) {
-        notchMiddleWidth.value = labelRef.value.clientWidth * 0.8 + 8;
-      }
+      if (labelRef.value)
+        notchMiddleWidth.value = labelRef.value.clientWidth * 0.8 + 8
     }
 
     function setPlaceholder() {
-      if (attrs.placeholder && !labelRef.value) {
-        showPlaceholder.value = true;
-      } else {
-        showPlaceholder.value = false;
-      }
+      if (attrs.placeholder && !labelRef.value)
+        showPlaceholder.value = true
+      else
+        showPlaceholder.value = false
     }
 
-    const currentLength = ref(0);
+    const currentLength = ref(0)
 
     function handleInput(e) {
       if (props.counter) {
         if (e.target.value.length > props.maxlength) {
-          e.target.value = inputValue.value;
-          return;
+          e.target.value = inputValue.value
+          return
         }
 
-        currentLength.value = e.target.value.length;
+        currentLength.value = e.target.value.length
       }
-      inputValue.value = e.target.value;
-      emit("update:modelValue", inputValue.value);
+      inputValue.value = e.target.value
+      emit('update:modelValue', inputValue.value)
     }
 
     function clickOutside() {
-      emit("click-outside");
+      emit('click-outside')
     }
 
     onMounted(() => {
-      calcNotch();
-      setPlaceholder();
+      calcNotch()
+      setPlaceholder()
 
-      if (props.validationEvent) {
-        bindValidationEvents();
-      }
-    });
+      if (props.validationEvent)
+        bindValidationEvents()
+    })
 
     onUpdated(() => {
-      calcNotch();
-      setPlaceholder();
-    });
+      calcNotch()
+      setPlaceholder()
+    })
 
     onUnmounted(() => {
-      off(inputRef.value, props.validationEvent, handleValidation);
-    });
+      off(inputRef.value, props.validationEvent, handleValidation)
+    })
 
     watchEffect(() => {
-      inputValue.value = props.modelValue;
-    });
+      inputValue.value = props.modelValue
+    })
 
     watch(
       () => props.isValidated,
-      (value) => (isInputValidated.value = value)
-    );
+      value => (isInputValidated.value = value)
+    )
 
     watch(
       () => props.isValid,
-      (value) => (isInputValid.value = value)
-    );
+      value => (isInputValid.value = value)
+    )
 
     return {
       inputRef,
@@ -308,8 +315,8 @@ export default {
       notchMiddleWidth,
       clickOutside,
       props,
-      currentLength,
-    };
-  },
-};
+      currentLength
+    }
+  }
+}
 </script>

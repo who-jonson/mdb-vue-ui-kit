@@ -26,60 +26,60 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBPageNav",
+  name: 'MDBPageNav',
   props: {
     tag: {
       type: String,
-      default: "li",
+      default: 'li'
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     href: {
       type: String,
-      default: "#",
+      default: '#'
     },
     prev: {
       type: Boolean,
-      default: false,
+      default: false
     },
     next: {
       type: Boolean,
-      default: false,
+      default: false
     },
     icon: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["page-item", props.disabled && "disabled"];
-    });
+      return ['page-item', props.disabled && 'disabled']
+    })
 
     const prevValue = computed(() => {
-      return props.icon ? "«" : "Previous";
-    });
+      return props.icon ? '«' : 'Previous'
+    })
 
     const nextValue = computed(() => {
-      return props.icon ? "»" : "Next";
-    });
+      return props.icon ? '»' : 'Next'
+    })
 
     const disabledTabindex = computed(() => {
-      return props.disabled ? "-1" : " false";
-    });
+      return props.disabled ? '-1' : ' false'
+    })
 
     return {
       className,
       prevValue,
       nextValue,
       disabledTabindex,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

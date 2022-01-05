@@ -1,14 +1,61 @@
 {
   "name": "mdb-vue-ui-kit",
   "version": "1.8.0",
-  "main": "js/mdb.umd.min.js",
-  "repository": "https://github.com/mdbootstrap/mdb-vue-ui-kit.git",
-  "author": "MDBootstrap",
   "license": "MIT",
-  "types": "src/types/main.d.ts",
-  "web-types": "src/types/web-types.json",
+  "files": [
+    "css",
+    "dist",
+    "src/scss",
+    "types"
+  ],
+  "main": "./dist/mdb-vue-ui-kit.umd.js",
+  "module": "./dist/mdb-vue-ui-kit.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/mdb-vue-ui-kit.es.js",
+      "require": "./dist/mdb-vue-ui-kit.umd.js"
+    }
+  },
+  "types": "./dist/mdb-vue-ui-kit.d.ts",
+  "scripts": {
+    "dev": "concurrently \"yarn build:watch\" \"yarn dev:vite\"",
+    "dev:vite": "cd playgrounds/vite && yarn install --frozen-lockfile && yarn dev",
+    "dev:nuxt3": "cd playgrounds/nuxt3 && yarn install --frozen-lockfile && yarn dev",
+    "build": "vite build",
+    "build:lib": "yarn build && cp src/types/*.json dist/types/ && yarn cleanup",
+    "build:watch": "vite build --watch",
+    "lint": "eslint \"**/*.{vue,ts,js}\"",
+    "serve": "vite preview --port 5050",
+    "typecheck": "vue-tsc --noEmit",
+    "cleanup": "rm -rf playgrounds/**/node_modules playgrounds/**/.nuxt playgrounds/**/.output playgrounds/**/dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.14.0",
+    "@popperjs/core": "^2.10.0",
+    "@types/node": "^16.11.18",
+    "@vitejs/plugin-vue": "^2.0.1",
+    "concurrently": "^7.0.0",
+    "eslint": "^8.5.0",
+    "patch-vue-directive-ssr": "^0.0.1",
+    "typescript": "^4.2.4",
+    "vite": "^2.7.10",
+    "vite-plugin-dts": "^0.9.7",
+    "vue": "^3.2.0",
+    "vue-tsc": "^0.29.5"
+  },
+  "peerDependencies": {
+    "@popperjs/core": "^2.10.0",
+    "@vue/compiler-sfc": "^3.2.0",
+    "@vue/server-renderer": "^3.2.0",
+    "vue": "^3.2.0",
+    "vue-router": "^4.0.12"
+  },
+  "repository": "https://github.com/who-jonson/mdb-vue-ui-kit.git",
+  "author": "Jonson <www.jbc.bd@gmail.com>",
+  "web-types": "./dist/types/web-types.json",
   "vetur": {
-    "tags": "src/types/tags.json",
-    "attributes": "src/types/attributes.json"
+    "tags": "./dist/types/tags.json",
+    "attributes": "./dist/types/attributes.json"
   }
 }

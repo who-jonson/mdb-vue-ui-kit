@@ -1,42 +1,42 @@
 <template>
-  <component :is="tag" :class="className" :aria-current="currentName"
-    ><slot></slot
-  ></component>
+  <component :is="tag" :class="className" :aria-current="currentName">
+    <slot />
+  </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBBreadcrumbItem",
+  name: 'MDBBreadcrumbItem',
   props: {
     tag: {
       type: String,
-      default: "li",
+      default: 'li'
     },
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     current: {
       type: String,
-      default: "page",
-    },
+      default: 'page'
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["breadcrumb-item", props.active && "active"];
-    });
+      return ['breadcrumb-item', props.active && 'active']
+    })
 
     const currentName = computed(() => {
-      return props.active && props.current;
-    });
+      return props.active && props.current
+    })
 
     return {
       className,
       currentName,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

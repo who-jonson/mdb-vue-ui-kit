@@ -1,16 +1,16 @@
 <template>
   <component :is="tag" v-if="wrap" :class="wrapperClassName">
     <input
-      :class="inputClassName"
-      type="checkbox"
       v-bind="$attrs"
       :id="uid"
+      ref="inputRef"
+      :class="inputClassName"
+      type="checkbox"
       :checked="inputValue"
-      @change="handleChange"
       :required="required ? true : null"
       :aria-required="required"
-      ref="inputRef"
-    />
+      @change="handleChange"
+    >
     <label v-if="label" :class="labelClassName" :for="uid">
       {{ label }}
     </label>
@@ -23,16 +23,16 @@
   </component>
   <input
     v-if="!wrap"
-    :class="inputClassName"
-    type="checkbox"
     v-bind="$attrs"
     :id="uid"
+    ref="inputRef"
+    :class="inputClassName"
+    type="checkbox"
     :checked="inputValue"
-    @change="handleChange"
     :required="required ? true : null"
     :aria-required="required"
-    ref="inputRef"
-  />
+    @change="handleChange"
+  >
   <label v-if="!wrap && label" :class="labelClassName" :for="uid">
     {{ label }}
   </label>
@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
-import { on, off } from "../../utils/MDBEventHandlers";
-import { getUID } from "../../utils/getUID";
+import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { off, on } from '../../utils/MDBEventHandlers'
+import { getUID } from '../../utils/getUID'
 
 export default {
-  name: "MDBCheckbox",
+  name: 'MDBCheckbox',
   inheritAttrs: false,
   props: {
     id: String,
@@ -69,93 +69,92 @@ export default {
     invalidFeedback: String,
     tooltipFeedback: {
       type: Boolean,
-      default: false,
+      default: false
     },
     wrap: {
       type: Boolean,
-      default: true,
+      default: true
     },
     formCheck: {
       type: Boolean,
-      default: true,
+      default: true
     },
     tag: {
       type: String,
-      default: "div",
-    },
+      default: 'div'
+    }
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const inputRef = ref("inputRef");
-    const inputValue = ref(props.modelValue);
-    const uid = props.id || getUID("MDBCheckbox-");
+    const inputRef = ref('inputRef')
+    const inputValue = ref(props.modelValue)
+    const uid = props.id || getUID('MDBCheckbox-')
 
     const wrapperClassName = computed(() => {
       return [
-        props.formCheck && !props.btnCheck ? "form-check" : "",
-        props.inline && "form-check-inline",
-        props.wrapperClass,
-      ];
-    });
+        props.formCheck && !props.btnCheck ? 'form-check' : '',
+        props.inline && 'form-check-inline',
+        props.wrapperClass
+      ]
+    })
     const inputClassName = computed(() => {
       return [
-        props.btnCheck ? "btn-check" : "form-check-input",
+        props.btnCheck ? 'btn-check' : 'form-check-input',
         props.inputClass && props.inputClass,
-        isInputValidated.value && isInputValid.value && "is-valid",
-        isInputValidated.value && !isInputValid.value && "is-invalid",
-      ];
-    });
+        isInputValidated.value && isInputValid.value && 'is-valid',
+        isInputValidated.value && !isInputValid.value && 'is-invalid'
+      ]
+    })
     const labelClassName = computed(() => {
-      return [props.labelClass || "form-check-label"];
-    });
+      return [props.labelClass || 'form-check-label']
+    })
 
     const validFeedbackClassName = computed(() => {
-      return props.tooltipFeedback ? "valid-tooltip" : "valid-feedback";
-    });
+      return props.tooltipFeedback ? 'valid-tooltip' : 'valid-feedback'
+    })
 
     const invalidFeedbackClassName = computed(() => {
-      return props.tooltipFeedback ? "invalid-tooltip" : "invalid-feedback";
-    });
+      return props.tooltipFeedback ? 'invalid-tooltip' : 'invalid-feedback'
+    })
 
     // Validation ------------------------
-    const isInputValidated = ref(props.isValidated);
-    const isInputValid = ref(props.isValid);
+    const isInputValidated = ref(props.isValidated)
+    const isInputValid = ref(props.isValid)
 
     const handleValidation = (e) => {
-      isInputValid.value = e.target.checkValidity();
-      isInputValidated.value = true;
-    };
+      isInputValid.value = e.target.checkValidity()
+      isInputValidated.value = true
+    }
 
     const bindValidationEvent = () => {
-      on(inputRef.value, "change", handleValidation);
-    };
+      on(inputRef.value, 'change', handleValidation)
+    }
 
     function handleChange() {
-      inputValue.value = !inputValue.value;
-      emit("update:modelValue", inputValue.value);
+      inputValue.value = !inputValue.value
+      emit('update:modelValue', inputValue.value)
     }
 
     onMounted(() => {
-      if (props.validateOnChange) {
-        bindValidationEvent();
-      }
-    });
+      if (props.validateOnChange)
+        bindValidationEvent()
+    })
 
     onUnmounted(() => {
-      off(inputRef.value, "change", handleValidation);
-    });
+      off(inputRef.value, 'change', handleValidation)
+    })
 
-    watchEffect(() => (inputValue.value = props.modelValue));
+    watchEffect(() => (inputValue.value = props.modelValue))
 
     watch(
       () => props.isValidated,
-      (value) => (isInputValidated.value = value)
-    );
+      value => (isInputValidated.value = value)
+    )
 
     watch(
       () => props.isValid,
-      (value) => (isInputValid.value = value)
-    );
+      value => (isInputValid.value = value)
+    )
 
     return {
       inputRef,
@@ -167,8 +166,8 @@ export default {
       inputValue,
       handleChange,
       uid,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

@@ -1,0 +1,14 @@
+{
+	"private": true,
+	"scripts": {
+		"dev": "vite --port 8080",
+		"build": "vite build",
+		"serve": "vite preview"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^2.0.1",
+		"sass": "^1.45.2",
+		"vite": "^2.7.0",
+		"vue": "^3.2.0"
+	}
+}

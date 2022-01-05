@@ -8,61 +8,61 @@
     aria-label="Toggle navigation"
     @click="handleClick"
   >
-    <MDBIcon :icon="togglerIcon" :size="togglerSize" :iconStyle="iconStyle" />
+    <MDBIcon :icon="togglerIcon" :size="togglerSize" :icon-style="iconStyle" />
   </component>
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { MDBIcon } from "@/index.free.js";
+import { computed, ref } from 'vue'
+import { MDBIcon } from '../../../index'
 
 export default {
-  name: "MDBNavbarToggler",
+  name: 'MDBNavbarToggler',
   components: {
-    MDBIcon,
+    MDBIcon
   },
   props: {
     tag: {
       type: String,
-      default: "button",
+      default: 'button'
     },
     target: {
       type: String,
-      default: "#navbarSupportedContent",
+      default: '#navbarSupportedContent'
     },
     togglerClass: {
-      type: String,
+      type: String
     },
     togglerIcon: {
       type: String,
-      default: "bars",
+      default: 'bars'
     },
     togglerSize: {
       type: String,
-      default: "1x",
+      default: '1x'
     },
     iconStyle: {
       type: String,
-      default: "fas",
-    },
+      default: 'fas'
+    }
   },
   setup(props) {
     const navTogglerClass = computed(() => {
-      return ["navbar-toggler", props.togglerClass];
-    });
+      return ['navbar-toggler', props.togglerClass]
+    })
 
-    const isExpanded = ref(false);
+    const isExpanded = ref(false)
 
     const handleClick = () => {
-      isExpanded.value = !isExpanded.value;
-    };
+      isExpanded.value = !isExpanded.value
+    }
 
     return {
       navTogglerClass,
       handleClick,
       isExpanded,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

@@ -1,89 +1,88 @@
 <template>
   <li v-if="href" class="nav-item" role="presentation">
     <a
+      :id="uid"
+      v-bind="$attrs"
+      ref="item"
       :class="className"
       role="tab"
       :aria-controls="controls"
-      :id="uid"
       :href="href"
-      v-bind="$attrs"
       @click.prevent="handleClick(tabId)"
-      ref="item"
     >
       <slot />
     </a>
   </li>
   <component
-    v-else
     :is="tag"
+    v-else
+    :id="uid"
+    v-bind="$attrs"
+    ref="item"
     :class="className"
     role="tab"
     :aria-controls="controls"
-    :id="uid"
-    v-bind="$attrs"
     @click.prevent="handleClick(tabId)"
-    ref="item"
   >
     <slot />
   </component>
 </template>
 
 <script>
-import { computed, inject, onMounted, ref, watchEffect } from "vue";
+import { computed, inject, onMounted, ref, watchEffect } from 'vue'
 
 export default {
-  name: "MDBTabItem",
+  name: 'MDBTabItem',
   inheritAttrs: false,
   props: {
     tag: {
       type: String,
-      default: "a",
+      default: 'a'
     },
     tabId: {
       type: String,
-      required: true,
+      required: true
     },
-    href: String,
+    href: String
   },
   setup(props) {
-    const item = ref("item");
+    const item = ref('item')
 
     const className = computed(() => {
-      return ["nav-link", isActive.value && "active"];
-    });
+      return ['nav-link', isActive.value && 'active']
+    })
 
     const uid = computed(() => {
-      return `tab-${props.tabId}`;
-    });
+      return `tab-${props.tabId}`
+    })
     const controls = computed(() => {
-      return `${props.tabId}`;
-    });
+      return `${props.tabId}`
+    })
 
-    const activeTabId = inject("activeTab", false);
+    const activeTabId = inject('activeTab', false)
     const isActive = ref(
-      activeTabId &&
-        (activeTabId.value === props.tabId ||
-          (activeTabId && activeTabId === props.tabId))
-    );
+      activeTabId
+        && (activeTabId.value === props.tabId
+          || (activeTabId && activeTabId === props.tabId))
+    )
 
-    const updateActiveTab = inject("updateActiveTab", false);
+    const updateActiveTab = inject('updateActiveTab', false)
     watchEffect(
       () =>
-        (isActive.value =
-          activeTabId &&
-          (activeTabId.value === props.tabId ||
-            (activeTabId && activeTabId === props.tabId)))
-    );
+        (isActive.value
+          = activeTabId
+          && (activeTabId.value === props.tabId
+            || (activeTabId && activeTabId === props.tabId)))
+    )
 
     const handleClick = () => {
-      updateActiveTab(item.value, props.tabId);
-    };
+      updateActiveTab(item.value, props.tabId)
+    }
 
     onMounted(() => {
-      if (isActive.value && updateActiveTab) {
-        updateActiveTab(item.value, props.tabId);
-      }
-    });
+      if (isActive.value && updateActiveTab)
+        updateActiveTab(item.value, props.tabId)
+    })
 
     return {
       item,
@@ -91,8 +90,8 @@ export default {
       controls,
       className,
       handleClick,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>

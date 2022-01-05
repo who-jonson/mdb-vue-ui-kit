@@ -1,29 +1,29 @@
 <template>
   <component :is="tag" :class="className">
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue'
 
 export default {
-  name: "MDBModalBody",
+  name: 'MDBModalBody',
   props: {
     tag: {
       type: String,
-      default: "div",
-    },
+      default: 'div'
+    }
   },
   setup(props) {
     const className = computed(() => {
-      return ["modal-body"];
-    });
+      return ['modal-body']
+    })
 
     return {
       className,
-      props,
-    };
-  },
-};
+      props
+    }
+  }
+}
 </script>
